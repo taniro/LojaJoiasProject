@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ufrn.br.lojajoiasproject.domain.Joia;
 import ufrn.br.lojajoiasproject.repository.JoiaRepository;
 
+import java.util.List;
+
 @Service
 public class JoiaService {
 
@@ -16,8 +18,14 @@ public class JoiaService {
     public  void create(Joia j){
         repository.save(j);
     }
-    public void delete(){}
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
     public void updated(){}
-    public void getAll(){}
-    public void getById(){}
+    public List<Joia> getAll(){
+        return repository.findAll();
+    }
+    public Joia getById(Long id){
+        return repository.findById(id).get();
+    }
 }
