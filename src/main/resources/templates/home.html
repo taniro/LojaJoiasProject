@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+Clique <a href="/cadastro.html">aqui</a> para cadastrar uma nova Joia.
+
+<h1> Lista de Joias</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Valor</th>
+        <th>Tipo</th>
+        <th>Pedras</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="j : ${joias}">
+        <td th:text="${j.nome}"></td>
+        <td th:text="${j.valor}"></td>
+        <td th:text="${j.tipo}"></td>
+        <td th:text="${j.pedras}"></td>
+        <td>
+            <a th:href="@{'/editar/' + ${j.id}}"> EDITAR </a>
+            <a th:href="@{'/deletar/' + ${j.id}}"> DELETAR </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+
+<div th:replace="fragments/card :: card('Olá', 'Este é um card de exemplo')"></div>
