@@ -25,7 +25,15 @@ public class Joia {
     Double valor;
     String tipo;
     String pedras;
+    String imagemUri;
 
+    public String getImagemUri() {
+        return imagemUri;
+    }
+
+    public void setImagemUri(String imagemUri) {
+        this.imagemUri = imagemUri;
+    }
 
     public Long getId() {
         return id;

@@ -6,20 +6,22 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ufrn.br.lojajoiasproject.domain.Joia;
+import ufrn.br.lojajoiasproject.service.FileStorageService;
 import ufrn.br.lojajoiasproject.service.JoiaService;
 
 @Controller
 public class JoiaController {
 
     JoiaService service;
+    FileStorageService fileStorageService;
 
-    public JoiaController(JoiaService service) {
+    public JoiaController(JoiaService service, FileStorageService fileStorageService) {
         this.service = service;
+        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/")
@@ -30,6 +32,20 @@ public class JoiaController {
         model.addAttribute("msg", session.getAttribute("msg"));
         model.addAttribute("joiaList", service.getAll());
         return "index";
+    }
+
+    @RequestMapping(value = "/doProcessSaveWithFile", method = RequestMethod.POST)
+    public String doSalvar(@ModelAttribute @Valid Joia j, Errors errors, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
+        if (errors.hasErrors()){
+            return "cadastro";
+        }else{
+
+            j.setImagemUri(file.getOriginalFilename());
+            service.create(j);
+            fileStorageService.save(file);
+            redirectAttributes.addAttribute("msg", "Cadastro realizado com sucesso");
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/doProcessSave")
