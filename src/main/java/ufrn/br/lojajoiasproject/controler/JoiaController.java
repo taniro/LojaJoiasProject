@@ -17,11 +17,11 @@ import ufrn.br.lojajoiasproject.service.JoiaService;
 public class JoiaController {
 
     JoiaService service;
-    FileStorageService fileStorageService;
+//    FileStorageService fileStorageService;
 
-    public JoiaController(JoiaService service, FileStorageService fileStorageService) {
+    public JoiaController(JoiaService service/*, FileStorageService fileStorageService*/) {
         this.service = service;
-        this.fileStorageService = fileStorageService;
+//        this.fileStorageService = fileStorageService;
     }
 
     @GetMapping("/")
@@ -34,19 +34,19 @@ public class JoiaController {
         return "index";
     }
 
-    @RequestMapping(value = "/doProcessSaveWithFile", method = RequestMethod.POST)
-    public String doSalvar(@ModelAttribute @Valid Joia j, Errors errors, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
-        if (errors.hasErrors()){
-            return "cadastro";
-        }else{
-
-            j.setImagemUri(file.getOriginalFilename());
-            service.create(j);
-            fileStorageService.save(file);
-            redirectAttributes.addAttribute("msg", "Cadastro realizado com sucesso");
-            return "redirect:/";
-        }
-    }
+//    @RequestMapping(value = "/doProcessSaveWithFile", method = RequestMethod.POST)
+//    public String doSalvar(@ModelAttribute @Valid Joia j, Errors errors, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
+//        if (errors.hasErrors()){
+//            return "cadastro";
+//        }else{
+//
+//            j.setImagemUri(file.getOriginalFilename());
+//            service.create(j);
+//            fileStorageService.save(file);
+//            redirectAttributes.addAttribute("msg", "Cadastro realizado com sucesso");
+//            return "redirect:/";
+//        }
+//    }
 
     @PostMapping("/doProcessSave")
     public String doProcessSave(@ModelAttribute @Valid Joia j, Errors errors){
